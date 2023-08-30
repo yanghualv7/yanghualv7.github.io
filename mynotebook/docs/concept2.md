@@ -1,4 +1,4 @@
-# 下发设置命令
+# concept2下发设置命令
 
 本文档是叙述如何构建合适的指令，使用官方提供的API接口向concept2划船机发送预定义命令。
 
@@ -120,3 +120,12 @@
 ## 6.终止锻炼
 
 **完整命令**：f1 76 04 13 02 01 02 60 f2
+
+
+
+
+
+- ## 联系方式
+
+  - GitHub: [yanghualv7](https://github.com/yanghualv7)
+  - 邮箱: [yang2652841696@gmail.com](mailto:yang2652841696@gmail.com)
