@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
-        uses: actions/checkout@main
+        uses: actions/checkout@v2
       - name: Deploy docs
-        uses: yanghualv7/yanghualv7.github.io@gh-pages
+        uses: yanghualv7/yanghualv7.github.io@master
 
           GITHUB_TOKEN: ${{ secrets.abc }}
           EXTRA_PACKAGES: build-base
