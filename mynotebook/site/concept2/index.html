@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>下发设置命令 - My Docs</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">My Docs</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Welcome to MkDocs</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">下发设置命令</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">下发设置命令</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#1" class="nav-link">1. 注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#2" class="nav-link">2.校验和计算</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#3" class="nav-link">3.固定时间/距离</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#4" class="nav-link">4.可变间隔</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#5" class="nav-link">5. 未定义休息时间</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#6" class="nav-link">6.终止锻炼</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="_1">下发设置命令</h1>
+<p>本文档是叙述如何构建合适的指令，使用官方提供的API接口向concept2划船机发送预定义命令。</p>
+<p>本文档不保证完全准确，仅做参考使用，请使用者切勿盲从。</p>
+<h2 id="1">1. 注意事项</h2>
+<ul>
+<li>发送以下命令需先用蓝牙与表头相连</li>
+<li>构建命令字符数量最大值为120</li>
+<li>下发指令可使用官方提供<code>PMSDKDemo</code></li>
+</ul>
+<p>​       <a href="https://www.concept2.com/service/software/software-development">PMSDKDemo下载地址</a></p>
+<h2 id="2">2.校验和计算</h2>
+<ul>
+<li>
+<p>除去<code>f1、f2</code>将所有数据进行异或</p>
+</li>
+<li>
+<p>示例</p>
+</li>
+</ul>
+<p>​   <code>需要计算的数据</code>：76 18 01 01 05 03 05 00 <strong>00 01 d3 c1</strong> 05 05 00 <strong>00 00 13 71</strong> 14 01 01 13 02 01 01</p>
+<p>​   <code>校验和</code>：19</p>
+<p>​   <code>发送命令</code>：f1 76 18 01 01 05 03 05 00 00 01 d3 c1 05 05 00 00 00 13 71 14 01 01 13 02 01 01 19 f2</p>
+<h2 id="3">3.固定时间/距离</h2>
+<h3 id="1_1">1. 距离/分段</h3>
+<ul>
+<li>原始示例</li>
+</ul>
+<p>该命令使用 <code>tkcmdsetUSB_do_DDIcommand</code> 发送，其发送的含义为：目标距离<strong>2000m</strong>，分段距离<strong>400m</strong></p>
+<p><img alt="image-20230728122000845" src="../concept2.assets/image-20230728122000845.png" /></p>
+<ul>
+<li>自定义示例</li>
+</ul>
+<p>​   <strong>完整命令</strong>：f1 76 18 01 01 03 03 05 80 <strong>00 01 11 11</strong> 05 05 80 <strong>00 00 00 64</strong> 14 01 01 13 02 01 01 0b f2</p>
+<p>​   <strong>说明</strong>：目标距离<strong>69905m</strong>,分段距离<strong>100m</strong></p>
+<p>​   <strong>00 01 11 11</strong>：表示设定目标距离为<strong>69905m</strong>，以<code>1m</code>为单位</p>
+<p>​   <strong>00 00 00 64</strong>：表示分段距离为<strong>100m</strong>，以<code>1m</code>为单位</p>
+<hr />
+<h3 id="2_1">2.时间/分段</h3>
+<ul>
+<li>原始示例</li>
+</ul>
+<p>​   该命令使用 <code>tkcmdsetUSB_do_DDIcommand</code> 发送，其发送的含义为：目标时间<strong>20min</strong>,分段时间<strong>4min</strong></p>
+<p><img alt="image-20230728122441538" src="../concept2.assets/image-20230728122441538.png" /></p>
+<ul>
+<li>自定义示例</li>
+</ul>
+<p>​   <strong>完整命令</strong>：f1 76 18 01 01 05 03 05 00 <strong>00 01 d4 c0</strong> 05 05 00 <strong>00 00 17 70</strong> 14 01 01 13 02 01 01 1a f2</p>
+<p>​   <strong>说明</strong>：目标时间<strong>20min</strong>,分段时间<strong>1min</strong></p>
+<p>​   <strong>00 01 d4 c0</strong>：表示设定目标时间为<strong>20min</strong>，以<code>0.01sec</code>为单位</p>
+<p>​   <strong>00 00 17 70</strong>: 表示分段时间为<strong>1min</strong>，以<code>0.01sec</code>为单位</p>
+<h2 id="4">4.可变间隔</h2>
+<h3 id="1_2">1.分段（距离/时间+休息）</h3>
+<p><img alt="image-20230816173853157" src="../concept2.assets/image-20230816173853157.png" /></p>
+<p><img alt="image-20230816174338314" src="../concept2.assets/image-20230816174338314.png" /></p>
+<p><img alt="image-20230816174432048" src="../concept2.assets/image-20230816174432048.png" /></p>
+<p><strong>完整命令</strong>：f1 76 6f 18 01 00 01 01 08 17 01 01 03 05 80 00 00 01 f4 04 02 00 3c 06 04 00 00 27 10 14 01 01 18 01 01 17 01 00 03 05 00 00 00 46 50 04 02 00 00 06 04 00 00 27 10 14 01 01 18 01 02 17 01 01 03 05 80 00 00 03 e8 04 02 00 00 06 04 00 00 27 10 14 01 01 18 01 03 17 01 00 03 05 00 00 00 75 30 04 02 00 78 06 04 00 00 27 10 14 01 01 13 02 01 01 09 f2</p>
+<p><strong>1min*3+间隔30s</strong>:f1 <code>76 43</code> <code>18 01 00 01 01 08</code> <code>17 01 00</code> <code>03 05 00 00 00 17 70</code> <code>04 02 00 1e</code> <code>14 01 01</code> <code>18 01 01</code> <code>17 01 00</code> <code>03 05 00 00 00 17 70</code> <code>04 02 00 1e</code> <code>14 01 01</code> <code>18 01 02</code> <code>17 01 00</code> <code>03 05 00 00 00 17 70</code> <code>04 02 00 00</code> <code>14 01 01</code> <code>13 02 01 01</code> <code>53</code> f2</p>
+<p><strong>100m*3+间隔30s</strong>:f1 76 43 <strong>18 01 00 01 01 08</strong> <code>17 01 01</code> <code>03 05 80 00 00 00 64</code> <code>04 02 00 1e</code> <code>14 01 01</code> <code>18 01 01</code> <code>17 01 01</code> <code>03 05 80 00 00 00 64</code> <code>04 02 00 1e</code> <code>14 01 01</code> <code>18 01 02</code> <code>17 01 01</code> <code>03 05 80 00 00 00 64</code> <code>04 02 00 00</code> <code>14 01 01</code> <code>13 02 01 01</code> d1 f2</p>
+<h2 id="5">5. 未定义休息时间</h2>
+<p><img alt="image-20230826124726734" src="../concept2.assets/image-20230826124726734.png" /></p>
+<p><img alt="image-20230826124811789" src="../concept2.assets/image-20230826124811789.png" /></p>
+<p><strong>完整命令</strong>：f1 76 45 18 01 00 01 01 08 <strong>17 01 04</strong> 03 05 80 00 00 00 64 04 02 00 00 06 04 00 00 32 c8 14 01 01 18 01 01 <strong>17 01 03</strong> 03 05 00 00 00 2e e0 04 02 00 00 06 04 00 00 32 c8 14 01 01 <strong>01 01 09 05 05 80 00 00 00 00</strong> 13 02 01 01 8f f2</p>
+<p><strong>17 01 04</strong>：<code>04</code>表示目标距离休息时间未定义</p>
+<p><strong>17 01 03</strong> ：<code>03</code>表示目标时间休息时间未定义</p>
+<p><strong>01 01 09</strong>：设置未定义休息时间</p>
+<p><strong>100m Undefined Rest +3min  Undefined Rest</strong>：f1 76 31 18 01 00 01 01 08 17 01 04 03 05 80 00 00 00 64 14 01 01 18 01 01 17 01 03 03 05 00 00 00 2e e0 14 01 01 01 01 09 05 05 80 00 00 00 00 13 02 01 01 fb f2</p>
+<h2 id="6">6.终止锻炼</h2>
+<p><strong>完整命令</strong>：f1 76 04 13 02 01 02 60 f2</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
