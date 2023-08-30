@@ -11,7 +11,7 @@ jobs:
       - name: Checkout main
         uses: actions/checkout@main
       - name: Deploy docs
-        uses: yanghualv7/yanghualv7.github.io@main
-        env:
+        uses: yanghualv7/yanghualv7.github.io@gh-pages
+
           GITHUB_TOKEN: ${{ secrets.abc }}
           EXTRA_PACKAGES: build-base
