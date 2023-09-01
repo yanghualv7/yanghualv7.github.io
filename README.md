@@ -1,4 +1,4 @@
 # yanghualv7的个人网站
-- 生成 MkDocs
-- 主题 Material
-- 发布 GitHub Pages
+- 生成 [MkDocs](https://www.mkdocs.org/)
+- 主题 [Material](https://github.com/squidfunk/mkdocs-material)
+- 发布 [GitHub Pages](https://pages.github.com/)
