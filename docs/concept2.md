@@ -122,10 +122,3 @@
 **完整命令**：f1 76 04 13 02 01 02 60 f2
 
 
-
-
-
-- ## 联系方式
-
-  - GitHub: [yanghualv7](https://github.com/yanghualv7)
-  - 邮箱: [yang2652841696@gmail.com](mailto:yang2652841696@gmail.com)
