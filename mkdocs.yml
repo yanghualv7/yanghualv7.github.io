@@ -3,12 +3,15 @@ site_author: Yanghualv
 site_url: https://example.com/
 nav:
   - Home: 
-      - index.md
-      - Page1: Home/page1.md
-      - 页面2: Home/page2.md
+    - index.md
+    - 推荐文章: Home/page1.md
 
   - 开发文档: 
-      - concept2.md
+    - concept2:
+      - 项目摘要: Documentation/concept2/c2_index.md
+      - 构建命令: Documentation/concept2/concept2.md
+    - 测试目录:
+      - 测试: Documentation/test/test.md
 
 theme:
   name: material
@@ -33,17 +36,17 @@ theme:
         name: 切换至日间模式
   features:  
     - navigation.footer #页脚可以包含指向当前页面的上一页和下一页的链接
-    - navigation.instant #- header.autohide  #自动隐藏
+    # - navigation.instant #- header.autohide  #自动隐藏
     #- announce.dismiss #呈现可标记为由用户读取的临时公告，可以包含一个用于取消当前公告的按钮
     - navigation.tracking #地址栏中的 URL 将自动更新为在目录中突出显示的活动锚点
     - navigation.tabs #顶级部分将呈现在上面视口标题下方的菜单层中，但在移动设备上保持原样
     - navigation.tabs.sticky  #启用粘性选项卡后，导航选项卡将锁定在标题下方，并在向下滚动时始终保持可见
-    - navigation.sections #启用部分后，顶级部分在边栏中呈现为1220px以上视口的组，但在移动设备上保持原样
+    # - navigation.sections #启用部分后，顶级部分在边栏中呈现为1220px以上视口的组，但在移动设备上保持原样
     - navigation.top # 返回顶部的按钮 在上滑时出现
     - search.suggest # 搜索输入一些字母时推荐补全整个单词
     - search.highlight # 搜索出的文章关键词加入高亮
-    - navigation.expand # 打开Tab时左侧目录全部展开
-    - navigation.indexes #启用节索引页后，可以将文档直接附加到节
+    # - navigation.expand # 打开Tab时左侧目录全部展开
+    # - navigation.indexes #启用节索引页后，可以将文档直接附加到节
     - search.share #搜索分享按钮
   language: zh # 一些提示性的文字会变成中文
 
