@@ -4,7 +4,7 @@ site_url: https://example.com/
 nav:
   - Home: 
     - index.md
-    - 推荐文章: Home/page1.md
+    - 疑问: Home/answer.md
 
   - 开发文档: 
     - concept2:
