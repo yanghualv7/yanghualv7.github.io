@@ -55,16 +55,15 @@ theme:
   language: zh # 一些提示性的文字会变成中文
 
 markdown_extensions:
-- toc:
-  permalink: true
-- pymdownx.highlight:
-  linenums: true
-  anchor_linenums: true
-- pymdownx.inlinehilite
-- pymdownx.superfences
-
-# 设置代码块语法高亮为中文
-markdown_extensions:
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      linenums: true
+      anchor_linenums: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
   - codehilite:
       guess_lang: false
       hljs_languages:
@@ -73,6 +72,14 @@ markdown_extensions:
         python: python
         javascript: javascript
         # 添加其他需要的语言
+
+extra_css:
+  - extra.css
+
+extra_javascript:
+  - https://polyfill.io/v3/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
+
 
 # 仓库信息
 repo_url: https://github.com/yanghualv7/yanghualv7.github.io
