@@ -13,6 +13,10 @@ nav:
     - 测试目录:
       - 测试: Documentation/test/test.md
 
+  - 笔记:
+    - study_notes: 
+      - faster-rcnn: Documentation/study_notes/faster-rcnn/faster-rcnn-学习笔记.md
+
 theme:
   name: material
   logo: Icon/home_icon.gif
