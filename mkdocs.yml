@@ -17,9 +17,11 @@ nav:
     - study_notes: 
       - faster-rcnn: Documentation/study_notes/faster-rcnn/faster-rcnn-学习笔记.md
 
+
 theme:
   name: material
   logo: Icon/home_icon.gif
+  custom_dir: overrides
 
   icon:
     # 更改页脚中的导航箭头
@@ -40,19 +42,15 @@ theme:
         name: 切换至日间模式
   features:  
     - navigation.footer #页脚可以包含指向当前页面的上一页和下一页的链接
-    # - navigation.instant #- header.autohide  #自动隐藏
-    #- announce.dismiss #呈现可标记为由用户读取的临时公告，可以包含一个用于取消当前公告的按钮
     - navigation.tracking #地址栏中的 URL 将自动更新为在目录中突出显示的活动锚点
     - navigation.tabs #顶级部分将呈现在上面视口标题下方的菜单层中，但在移动设备上保持原样
     - navigation.tabs.sticky  #启用粘性选项卡后，导航选项卡将锁定在标题下方，并在向下滚动时始终保持可见
-    # - navigation.sections #启用部分后，顶级部分在边栏中呈现为1220px以上视口的组，但在移动设备上保持原样
     - navigation.top # 返回顶部的按钮 在上滑时出现
     - search.suggest # 搜索输入一些字母时推荐补全整个单词
     - search.highlight # 搜索出的文章关键词加入高亮
-    # - navigation.expand # 打开Tab时左侧目录全部展开
-    # - navigation.indexes #启用节索引页后，可以将文档直接附加到节
-    - search.share #搜索分享按钮
+    - content.code.copy # 复制按钮
   language: zh # 一些提示性的文字会变成中文
+
 
 markdown_extensions:
   - toc:
@@ -79,6 +77,9 @@ extra_css:
 extra_javascript:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/languages/python.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/languages/cpp.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/languages/c.min.js
 
 
 # 仓库信息
@@ -95,5 +96,4 @@ extra:
       link: mailto:yang2652841696@gmail.com
       name: Google
 
-copyright: Copyright &copy; 2023 - NULL yanghualv # 自定义版权横幅可以呈现为页脚的一部分
-
+copyright: Copyright &copy; 2023 - NULL yanghualv
