@@ -21,7 +21,6 @@ nav:
 theme:
   name: material
   logo: Icon/home_icon.gif
-  custom_dir: overrides
 
   icon:
     # 更改页脚中的导航箭头
