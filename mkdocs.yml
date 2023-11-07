@@ -39,6 +39,9 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: 切换至日间模式
+    - git-revision-date-localized
+    - minify:
+      minify_html: true
   features:  
     - navigation.footer #页脚可以包含指向当前页面的上一页和下一页的链接
     - navigation.tracking #地址栏中的 URL 将自动更新为在目录中突出显示的活动锚点
@@ -49,6 +52,8 @@ theme:
     - search.highlight # 搜索出的文章关键词加入高亮
     - content.code.copy # 复制按钮
   language: zh # 一些提示性的文字会变成中文
+
+  custom_dir: overrides
 
 
 markdown_extensions:
@@ -77,6 +82,7 @@ extra_javascript:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
   - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js
+  - '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js'
   - extra.js
 
 
@@ -94,5 +100,8 @@ extra:
     - icon: fontawesome/solid/paper-plane
       link: mailto:yang2652841696@gmail.com
       name: Google
+  analytics:
+    provider: google
+    property: G-K58VQQYH80
 
 copyright: Copyright &copy; 2023 - NULL yanghualv
