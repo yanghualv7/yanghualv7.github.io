@@ -103,6 +103,5 @@ extra:
   analytics:
     provider: google
     property: G-K58VQQYH80
-    disqus: 'something'
 
 copyright: Copyright &copy; 2023 - NULL yanghualv
