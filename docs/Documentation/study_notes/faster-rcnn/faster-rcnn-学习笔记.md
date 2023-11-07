@@ -391,17 +391,17 @@ class RegionProposalNetwork(nn.Module):
         rpn_scores = self.score(x)
         rpn_scores = rpn_scores.permute(0, 2, 3, 1).contiguous().view(n, -1, 2)
         
-        #--------------------------------------------------------------------------------------#
+        #-------------------------------------------------------------------------------#
         #   进行softmax概率计算，每个先验框只有两个判别结果
         #   内部包含物体或者内部不包含物体，rpn_softmax_scores[:, :, 1]的内容为包含物体的概率
-        #--------------------------------------------------------------------------------------#
+        #-------------------------------------------------------------------------------#
         rpn_softmax_scores  = F.softmax(rpn_scores, dim=-1)
         rpn_fg_scores       = rpn_softmax_scores[:, :, 1].contiguous()
         rpn_fg_scores       = rpn_fg_scores.view(n, -1)
 
-        #------------------------------------------------------------------------------------------------#
+        #-------------------------------------------------------------------------------#
         #   生成先验框，此时获得的anchor是布满网格点的，当输入图片为600,600,3的时候，shape为(12996, 4)
-        #------------------------------------------------------------------------------------------------#
+        #-------------------------------------------------------------------------------#
         anchor = _enumerate_shifted_anchor(np.array(self.anchor_base), self.feat_stride, h, w)
         rois        = list()
         roi_indices = list()
@@ -514,3 +514,304 @@ rpn_fg_scores.view(n, -1): 这一行代码对提取出来的包含物体的概�
 ![image-20231106175446297](faster-rcnn-学习笔记.assets/image-20231106175446297.png)
 
 - 建议框生成过程
+
+  - 获得建议框网络的预测结果
+  - $rpn.py \rightarrow RegionProposalNetwork \rightarrow forward$
+
+  ```python
+          n, _, h, w = x.shape
+          #-----------------------------------------#
+          #   先进行一个3x3的卷积，可理解为特征整合
+          #-----------------------------------------#
+          x = F.relu(self.conv1(x))
+          #-----------------------------------------#
+          #   回归预测对先验框进行调整
+          #-----------------------------------------#
+          rpn_locs = self.loc(x)
+          rpn_locs = rpn_locs.permute(0, 2, 3, 1).contiguous().view(n, -1, 4)
+          #-----------------------------------------#
+          #   分类预测先验框内部是否包含物体
+          #-----------------------------------------#
+          rpn_scores = self.score(x)
+          rpn_scores = rpn_scores.permute(0, 2, 3, 1).contiguous().view(n, -1, 2)
+          
+          #----------------------------------------------------------------------------#
+          #   进行softmax概率计算，每个先验框只有两个判别结果
+          #   内部包含物体或者内部不包含物体，rpn_softmax_scores[:, :, 1]的内容为包含物体的概率
+          #----------------------------------------------------------------------------#
+          rpn_softmax_scores  = F.softmax(rpn_scores, dim=-1)
+          rpn_fg_scores       = rpn_softmax_scores[:, :, 1].contiguous()
+          rpn_fg_scores       = rpn_fg_scores.view(n, -1)
+  ```
+
+  - 生成先验框
+
+  ```python
+          #----------------------------------------------------------------------------#
+          #   生成先验框，此时获得的anchor是布满网格点的，当输入图片为600,600,3的时候，shape为(12996, 4)
+          #----------------------------------------------------------------------------#
+          anchor = _enumerate_shifted_anchor(np.array(self.anchor_base), self.feat_stride, h, w)
+  ```
+
+  - 利用建议框网络对先验框进行调整，再进行筛选，获得最终的建议框
+
+- 通过第二步我们获得了38x38x9个先验框的预测结果。预测结果包含两部分。
+
+  **9 x 4的卷积** 用于预测 **公用特征层上** **每一个网格点上 每一个先验框**的变化情况。
+
+  **9 x 2的卷积** 用于预测 **公用特征层上** **每一个网格点上** **每一个预测框**内部是否包含了物体。
+
+  相当于就是将整个图像分成38x38个网格；然后从每个网格中心建立9个先验框，一共38x38x9个，12996个先验框。
+
+  **当输入图像shape不同时，先验框的数量也会发生改变。**
+
+  ![image-20231107083757957](faster-rcnn-学习笔记.assets/image-20231107083757957.png)
+
+![image-20231107084242267](faster-rcnn-学习笔记.assets/image-20231107084242267.png)
+
+先验框虽然可以代表一定的**框的位置信息与框的大小信息**，但是其是有限的，无法表示任意情况，因此还需要调整。
+
+- **9 x 4中的9表示了这个网格点所包含的先验框数量，其中的4表示了框的中心与长宽的调整情况。**
+
+实现代码如下：
+
+![image-20231107084732495](faster-rcnn-学习笔记.assets/image-20231107084732495.png)
+
+```python
+class ProposalCreator():
+    def __init__(
+        self, 
+        mode, 
+        nms_iou             = 0.7,
+        n_train_pre_nms     = 12000,
+        n_train_post_nms    = 600,
+        n_test_pre_nms      = 3000,
+        n_test_post_nms     = 300,
+        min_size            = 16
+    
+    ):
+        #-----------------------------------#
+        #   设置预测还是训练
+        #-----------------------------------#
+        self.mode               = mode
+        #-----------------------------------#
+        #   建议框非极大抑制的iou大小
+        #-----------------------------------#
+        self.nms_iou            = nms_iou
+        #-----------------------------------#
+        #   训练用到的建议框数量
+        #-----------------------------------#
+        self.n_train_pre_nms    = n_train_pre_nms
+        self.n_train_post_nms   = n_train_post_nms
+        #-----------------------------------#
+        #   预测用到的建议框数量
+        #-----------------------------------#
+        self.n_test_pre_nms     = n_test_pre_nms
+        self.n_test_post_nms    = n_test_post_nms
+        self.min_size           = min_size
+
+    def __call__(self, loc, score, anchor, img_size, scale=1.):
+        if self.mode == "training":
+            n_pre_nms   = self.n_train_pre_nms
+            n_post_nms  = self.n_train_post_nms
+        else:
+            n_pre_nms   = self.n_test_pre_nms
+            n_post_nms  = self.n_test_post_nms
+
+        #-----------------------------------#
+        #   将先验框转换成tensor
+        #-----------------------------------#
+        anchor = torch.from_numpy(anchor)
+        if loc.is_cuda:
+            anchor = anchor.cuda()
+        #-----------------------------------#
+        #   将RPN网络预测结果转化成建议框
+        #-----------------------------------#
+        roi = loc2bbox(anchor, loc)
+        #-----------------------------------#
+        #   防止建议框超出图像边缘
+        #-----------------------------------#
+        roi[:, [0, 2]] = torch.clamp(roi[:, [0, 2]], min = 0, max = img_size[1])
+        roi[:, [1, 3]] = torch.clamp(roi[:, [1, 3]], min = 0, max = img_size[0])
+        
+        #-----------------------------------#
+        #   建议框的宽高的最小值不可以小于16
+        #-----------------------------------#
+        min_size    = self.min_size * scale
+        keep        = torch.where(((roi[:, 2] - roi[:, 0]) >= min_size) & ((roi[:, 3] - roi[:, 1]) >= min_size))[0]
+        #-----------------------------------#
+        #   将对应的建议框保留下来
+        #-----------------------------------#
+        roi         = roi[keep, :]
+        score       = score[keep]
+
+        #-----------------------------------#
+        #   根据得分进行排序，取出建议框
+        #-----------------------------------#
+        order       = torch.argsort(score, descending=True)
+        if n_pre_nms > 0:
+            order   = order[:n_pre_nms]
+        roi     = roi[order, :]
+        score   = score[order]
+
+        #-----------------------------------#
+        #   对建议框进行非极大抑制
+        #   使用官方的非极大抑制会快非常多
+        #-----------------------------------#
+        keep    = nms(roi, score, self.nms_iou)
+        keep    = keep[:n_post_nms]
+        roi     = roi[keep]
+        return roi
+
+```
+
+
+
+### 3.小结
+
+- 建议框是用于初步筛选图像中哪些区域可能含有物体的一种技术。
+- 主干特征提取网络可以获得一个公用特征层，当输入图片为600x600x3时，其形状为38x38x1024。
+- 公用特征层中的38x38对应着图像中的38x38个区域，其中每个点相当于该区域内所有特征的汇总。
+- 建议框对这38x38个区域进行截取，即认为这些区域可能包含目标，并将截取的结果进行resize，调整为14x14x1024的大小。
+- 对每个建议框再次进行ResNet原有的第五次压缩。压缩完成后进行平均池化和展平操作，最后分别进行一个num_classes的全连接层和(num_classes)x4的全连接层。
+- num_classes的全连接层用于对最后获得的框进行分类，而(num_classes)x4的全连接层用于对相应的建议框进行调整。
+- 通过这些操作，可以获得所有建议框的调整情况以及这些建议框内物体的类别。
+- 实际上，上一步得到的建议框就是ROI（感兴趣区域）的先验框。
+
+
+
+## 四、RoiPooling
+
+​	对Proposal建议框加以利用的过程与shape变化如图所示,建议框调整后的结果就是最终的预测结果了，可以在图上进行绘画了。
+
+![image-20231107085501518](faster-rcnn-学习笔记.assets/image-20231107085501518.png)
+
+### RoiPooling层工作
+
+​	将proposal feature map进行分区域，然后对每一个区域各自进行最大池化得到$2 \times 2$的特征图2。在faster-rcnn中是将proposal feature map分割成$14 \times 14$  的区域
+
+![image-20231107090240667](faster-rcnn-学习笔记.assets/image-20231107090240667.png)
+
+- 图片测试信息打印
+
+- 源码`classifier.py`
+
+```python
+
+class Resnet50RoIHead(nn.Module):
+    def __init__(self, n_class, roi_size, spatial_scale, classifier):
+        super(Resnet50RoIHead, self).__init__()
+        self.classifier = classifier
+        #--------------------------------------#
+        #   对ROIPooling后的的结果进行回归预测
+        #--------------------------------------#
+        self.cls_loc = nn.Linear(2048, n_class * 4)
+        #-----------------------------------#
+        #   对ROIPooling后的的结果进行分类
+        #-----------------------------------#
+        self.score = nn.Linear(2048, n_class)
+        #-----------------------------------#
+        #   权值初始化
+        #-----------------------------------#
+        normal_init(self.cls_loc, 0, 0.001)
+        normal_init(self.score, 0, 0.01)
+
+        self.roi = RoIPool((roi_size, roi_size), spatial_scale)
+
+    def forward(self, x, rois, roi_indices, img_size):
+        n, _, _, _ = x.shape
+        if x.is_cuda:
+            roi_indices = roi_indices.cuda()
+            rois = rois.cuda()
+        print('Base_layers:',x.size())
+        print('roi_indices:',roi_indices.size())
+        print('rois:',rois.size())
+        rois        = torch.flatten(rois, 0, 1)
+        roi_indices = torch.flatten(roi_indices, 0, 1)
+        
+        rois_feature_map = torch.zeros_like(rois)
+        rois_feature_map[:, [0,2]] = rois[:, [0,2]] / img_size[1] * x.size()[3]
+        rois_feature_map[:, [1,3]] = rois[:, [1,3]] / img_size[0] * x.size()[2]
+
+        indices_and_rois = torch.cat([roi_indices[:, None], rois_feature_map], dim=1)
+        #-----------------------------------#
+        #   利用建议框对公用特征层进行截取
+        #-----------------------------------#
+        pool = self.roi(x, indices_and_rois)
+        #-----------------------------------#
+        #   利用classifier网络进行特征提取
+        #-----------------------------------#
+        fc7 = self.classifier(pool)
+        #--------------------------------------------------------------#
+        #   当输入为一张图片的时候，这里获得的f7的shape为[300, 2048]
+        #--------------------------------------------------------------#
+        fc7 = fc7.view(fc7.size(0), -1)
+
+        roi_cls_locs    = self.cls_loc(fc7)
+        roi_scores      = self.score(fc7)
+        roi_cls_locs    = roi_cls_locs.view(n, -1, roi_cls_locs.size(1))
+        roi_scores      = roi_scores.view(n, -1, roi_scores.size(1))
+        return roi_cls_locs, roi_scores
+```
+
+
+
+![image-20231107112646883](faster-rcnn-学习笔记.assets/image-20231107112646883.png)
+
+![image-20231107112709717](faster-rcnn-学习笔记.assets/image-20231107112709717.png)
+
+
+
+## 五、在原图上进行绘制
+
+​	在第四步的结尾，我们对建议框进行再一次进行解码后，我们可以获得预测框在原图上的位置，而且这些预测框都是经过筛选的。这些筛选后的框可以直接绘制在图片上，就可以获得结果了。
+
+
+
+## 六、整体流程
+
+以下是包括主干网络在内的更完整的Faster R-CNN流程示图：
+
+```apl
+    输入图片
+      ↓
+   主干特征提取网络（如ResNet）
+      ↓
+   候选框提取（RPN）
+      ↓
+   共享特征提取
+      ↓
+   RoI Pooling
+      ↓
+   样本标签分配和采样
+      ↓
+   特征提取和分类
+      ↓
+   边界框回归
+      ↓
+   最终检测框
+```
+
+
+
+- 输入图片：将需要进行目标检测的图片作为输入。
+
+- 主干特征提取网络：使用主干特征提取网络（如ResNet）对输入图片进行特征提取，得到一个共享的特征图。
+
+- 候选框提取（RPN）：使用Region Proposal Network（RPN）从共享的特征图中提取候选框（Proposal），这些候选框是可能含有物体的区域。
+
+- 共享特征提取：将主干特征提取网络提取的共享特征图用于后续步骤，如RoI Pooling和分类回归。
+
+- RoI Pooling：将RPN提取的候选框区域映射到共享特征图上，然后使用RoI Pooling操作将区域映射为固定大小的特征图。
+
+- 样本标签分配和采样：对RoI Pooling后的特征进行样本标签分配和采样，确定正负样本。
+
+- 特征提取和分类：使用卷积神经网络对RoI Pooling后的特征进行特征提取，并使用全连接层对提取的特征进行目标分类。
+
+- 边界框回归：使用另一个全连接层对RoI Pooling后的特征进行边界框回归，精确定位目标的位置。
+
+- 最终检测框：根据分类和回归的结果，得到最终的检测框，并进行非极大值抑制（NMS）处理，消除重叠的检测框。
+
+Faster R-CNN通过主干特征提取网络、候选框提取、共享特征提取、RoI Pooling和后续的分类与回归操作，实现了对输入图片中目标的准确检测与定位。
+
+![image-20231107113710654](faster-rcnn-学习笔记.assets/image-20231107113710654.png)
