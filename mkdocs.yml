@@ -76,9 +76,9 @@ extra_css:
 extra_javascript:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
-  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/languages/python.min.js
-  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/languages/cpp.min.js
-  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/languages/c.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js
+  - extra.js
+
 
 
 # 仓库信息
