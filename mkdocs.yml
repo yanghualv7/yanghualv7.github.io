@@ -5,6 +5,7 @@ nav:
   - Home: 
     - index.md
     - 疑问: Home/answer.md
+    - 待做事项: Home/todo.md
 
   - 开发文档: 
     - concept2:
@@ -17,8 +18,10 @@ nav:
       - git克隆项目失败: Documentation/git/git-小细节.md
 
   - 笔记:
-    - study_notes: 
-      - faster-rcnn: Documentation/study_notes/faster-rcnn/faster-rcnn-学习笔记.md
+    - study-notes: 
+      - faster-rcnn: Documentation/study-notes/faster-rcnn/faster-rcnn-学习笔记.md
+    - mkdocs操作:
+      - 添加评论功能: Documentation/mkdocs/mkdocs-添加评论功能.md
 
 
 theme:
