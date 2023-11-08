@@ -61,25 +61,37 @@ theme:
 
   custom_dir: overrides
 
-
 markdown_extensions:
-  - toc:
-      permalink: true
-  - pymdownx.highlight:
-      linenums: true
-      anchor_linenums: true
-  - pymdownx.arithmatex:
-      generic: true
-  - pymdownx.inlinehilite
-  - pymdownx.superfences
-  - codehilite:
-      guess_lang: false
+  - admonition  # 提示、注意事项、警告等注解框
+  - codehilite:  # 代码高亮
+      guess_lang: false 
       hljs_languages:
         c: c
         cpp: cpp
         python: python
         javascript: javascript
         # 添加其他需要的语言
+  - def_list  # 定义列表
+  - footnotes  # 脚注
+  - meta  # 元数据
+  - toc:  # 目录
+      permalink: true  # 目录链接
+  - pymdownx.arithmatex:  # LaTeX 数学公式
+      generic: true
+  - pymdownx.caret  # 上标
+  - pymdownx.critic  # 批注和评论
+  - pymdownx.details  # 可折叠的细节块
+  - pymdownx.emoji:  # Emoji 表情符号
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite  # 内联代码高亮
+  - pymdownx.keys  # 按键和快捷键
+  - pymdownx.magiclink  # 自动链接转换
+  - pymdownx.mark  # 标记（mark）文本
+  - pymdownx.smartsymbols  # 特殊字符和符号转换
+  - pymdownx.superfences  # 自定义代码块语法
+  - pymdownx.tasklist:  # 任务列表
+      custom_checkbox: true
+  - pymdownx.tilde  # 删除线
 
 extra_css:
   - extra.css
