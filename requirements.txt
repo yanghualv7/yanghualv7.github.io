@@ -5,3 +5,6 @@ jinja2==3.0.3
 mkdocs-static-i18n==0.46
 
 # 请注意，修改里面的版本号可能会导致评论功能失效
+
+Markdown
+pymdown-extensions
