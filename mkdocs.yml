@@ -1,28 +1,6 @@
 site_name: 小黄鸭
 site_author: Yanghualv
 site_url: https://example.com/
-nav:
-  - Home: 
-    - index.md
-    - 疑问: Home/answer.md
-    - 待做事项: Home/todo.md
-
-  - 开发文档: 
-    - concept2:
-      - 项目摘要: Documentation/concept2/c2_index.md
-      - 构建命令: Documentation/concept2/concept2.md
-  - Git:
-    - git操作总结:
-      - 前言: Documentation/git/git-index.md
-      - git推送: Documentation/git/git-推送方式.md
-      - git克隆项目失败: Documentation/git/git-小细节.md
-
-  - 笔记:
-    - study-notes: 
-      - faster-rcnn: Documentation/study-notes/faster-rcnn/faster-rcnn-学习笔记.md
-    - mkdocs操作:
-      - 添加评论功能: Documentation/study-notes/mkdocs/mkdocs-添加评论功能.md
-
 
 theme:
   name: material
@@ -123,3 +101,26 @@ extra:
     property: G-K58VQQYH80
 
 copyright: Copyright &copy; 2023 - NULL yanghualv
+
+nav:
+  - Home: 
+    - index.md
+    - 疑问: Home/answer.md
+    - 待做事项: Home/todo.md
+
+  - 开发文档: 
+    - concept2:
+      - 项目摘要: Documentation/concept2/c2_index.md
+      - 构建命令: Documentation/concept2/concept2.md
+  - Git:
+    - git操作总结:
+      - 前言: Documentation/git/git-index.md
+      - git推送: Documentation/git/git-推送方式.md
+      - git克隆项目失败: Documentation/git/git-小细节.md
+
+  - 笔记:
+    - study-notes: 
+      - faster-rcnn: Documentation/study-notes/faster-rcnn/faster-rcnn-学习笔记.md
+      - 计算机系统基础笔记: Documentation/study-notes/computer-system-basic/计算机系统基础笔记.md
+    - mkdocs操作:
+      - 添加评论功能: Documentation/study-notes/mkdocs/mkdocs-添加评论功能.md
