@@ -124,3 +124,5 @@ nav:
       - 计算机系统基础笔记: Documentation/study-notes/computer-system-basic/计算机系统基础笔记.md
     - mkdocs操作:
       - 添加评论功能: Documentation/study-notes/mkdocs/mkdocs-添加评论功能.md
+    - vscode操作:
+      - python环境切换: Documentation/study-notes/vscode/vscode-python-环境切换.md
