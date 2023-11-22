@@ -78,7 +78,6 @@ extra_javascript:
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js
   - https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js
-  - '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js'
   - extra.js
 
 
@@ -100,7 +99,7 @@ extra:
     provider: google
     property: G-K58VQQYH80
 
-copyright: Copyright &copy; 2023 - NULL yanghualv
+copyright: Copyright &copy; 2023 - NULL yanghualv7
 
 nav:
   - Home: 
