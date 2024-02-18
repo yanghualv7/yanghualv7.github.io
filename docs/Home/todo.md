@@ -24,7 +24,7 @@
 <hr style="border: 0; height: 2px; background-color: #00F;" ## 蓝色 2px>
 
 - [X] 创建时间 2023.11.8
-- [X] <font color="red">力扣每日1-2题 2023.11.9 任务完成失败</font>
+- [X] <font color="red">力扣每日1-2题 2023.11.9</font>
 
 <hr style="border: 0; height: 1px; background: linear-gradient(to right, #F00, #0F0 20%, #00F 80%, #000);" ## 渐变色 1px>
 
@@ -45,7 +45,7 @@
 <hr style="border: 0; height: 1px; background: linear-gradient(to right, #F00, #0F0 20%, #00F 80%, #000);" ## 渐变色 1px>
 
 - [x] 创建时间 2024.02.18
-- [ ] <font color="green">力扣每日1-2题。</font>
+- [x] 力扣每日1-2题。2024.02.18
 
 ## 3.其他
 
