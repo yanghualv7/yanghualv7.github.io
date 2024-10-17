@@ -116,6 +116,7 @@ nav:
       - 前言: Documentation/git/git-index.md
       - git推送: Documentation/git/git-推送方式.md
       - git克隆项目失败: Documentation/git/git-小细节.md
+      - git终端乱码: Documentation/git/git-终端中文乱码.md
 
   - 笔记:
     - study-notes: 
