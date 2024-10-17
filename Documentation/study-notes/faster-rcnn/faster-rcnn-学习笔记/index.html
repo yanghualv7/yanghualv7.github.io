@@ -1,0 +1,2119 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <meta name="author" content="Yanghualv">
+      
+      
+        <link rel="canonical" href="https://example.com/Documentation/study-notes/faster-rcnn/faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-7.3.6">
+    
+    
+      
+        <title>faster-rcnn - 小黄鸭</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.a57b2b03.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.3f5d1f46.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../../../extra.css">
+    
+    
+      
+
+  
+
+
+  
+
+  
+
+
+  <script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-K58VQQYH80"),document.addEventListener("DOMContentLoaded",function(){"undefined"!=typeof location$&&location$.subscribe(function(t){gtag("config","G-K58VQQYH80",{page_path:t.pathname})})})</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K58VQQYH80"></script>
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue#-上方的" data-md-color-accent="cyan">
+  
+    
+    <script>function __prefix(e){return new URL("../../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#faster-rcnn-" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="小黄鸭" class="md-header__button md-logo" aria-label="小黄鸭" data-md-component="logo">
+      
+  <img src="../../../../Icon/home_icon.gif" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            小黄鸭
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              faster-rcnn
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue#-上方的" data-md-color-accent="cyan"  aria-label="切换至夜间模式"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="切换至夜间模式" for="__palette_4" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="cyan"  aria-label="切换至日间模式"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="切换至日间模式" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="" data-md-color-primary="" data-md-color-accent=""  aria-hidden="true"  type="radio" name="__palette" id="__palette_3">
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="" data-md-color-scheme="" data-md-color-primary="" data-md-color-accent=""  aria-hidden="true"  type="radio" name="__palette" id="__palette_4">
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/yanghualv7/yanghualv7.github.io" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    yanghualv7的个人网站
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        Home
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../concept2/c2_index/" class="md-tabs__link">
+        开发文档
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../git/git-index/" class="md-tabs__link">
+        Git
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="./" class="md-tabs__link md-tabs__link--active">
+        笔记
+      </a>
+    </li>
+  
+
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="小黄鸭" class="md-nav__button md-logo" aria-label="小黄鸭" data-md-component="logo">
+      
+  <img src="../../../../Icon/home_icon.gif" alt="logo">
+
+    </a>
+    小黄鸭
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/yanghualv7/yanghualv7.github.io" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    yanghualv7的个人网站
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          Home
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Home" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          Home
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        小黄鸭
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Home/answer/" class="md-nav__link">
+        疑问
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Home/todo/" class="md-nav__link">
+        待做事项
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          开发文档
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="开发文档" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          开发文档
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_1" type="checkbox" id="__nav_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2_1">
+          concept2
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="concept2" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          concept2
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concept2/c2_index/" class="md-nav__link">
+        项目摘要
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../concept2/concept2/" class="md-nav__link">
+        构建命令
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          Git
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Git" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Git
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_1">
+          git操作总结
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="git操作总结" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          git操作总结
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../git/git-index/" class="md-nav__link">
+        前言
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../git/git-%E6%8E%A8%E9%80%81%E6%96%B9%E5%BC%8F/" class="md-nav__link">
+        git推送
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../git/git-%E5%B0%8F%E7%BB%86%E8%8A%82/" class="md-nav__link">
+        git克隆项目失败
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../git/git-%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/" class="md-nav__link">
+        git终端乱码
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          笔记
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="笔记" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          笔记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          study-notes
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="study-notes" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          study-notes
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          faster-rcnn
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        faster-rcnn
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#faster-rcnn" class="md-nav__link">
+    一、faster-rcnn介绍
+  </a>
+  
+    <nav class="md-nav" aria-label="一、faster-rcnn介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1rpn" class="md-nav__link">
+    1.使用RPN生成建议框
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2roi-pooling" class="md-nav__link">
+    2.ROI pooling层
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3.小结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backbone" class="md-nav__link">
+    二、主干网络（backbone）
+  </a>
+  
+    <nav class="md-nav" aria-label="二、主干网络（backbone）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1resnet50" class="md-nav__link">
+    1.ResNet50基本模块
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2bottleneck" class="md-nav__link">
+    2.Bottleneck
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-resnet" class="md-nav__link">
+    3. ResNet
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proposal" class="md-nav__link">
+    三、Proposal
+  </a>
+  
+    <nav class="md-nav" aria-label="三、Proposal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1regionproposalnetwork" class="md-nav__link">
+    1.RegionProposalNetwork
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2proposal" class="md-nav__link">
+    2.Proposal建议框的解码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    3.小结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roipooling" class="md-nav__link">
+    四、RoiPooling
+  </a>
+  
+    <nav class="md-nav" aria-label="四、RoiPooling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#roipooling_1" class="md-nav__link">
+    RoiPooling层工作
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    五、在原图上进行绘制
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    六、整体流程
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../computer-system-basic/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        计算机系统基础笔记
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2">
+          mkdocs操作
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="mkdocs操作" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          mkdocs操作
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mkdocs/mkdocs-%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA%E5%8A%9F%E8%83%BD/" class="md-nav__link">
+        添加评论功能
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          vscode操作
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="vscode操作" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          vscode操作
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vscode/vscode-python-%E7%8E%AF%E5%A2%83%E5%88%87%E6%8D%A2/" class="md-nav__link">
+        python环境切换
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vscode/CC%2B%2B%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="md-nav__link">
+        C/C++环境配置
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#faster-rcnn" class="md-nav__link">
+    一、faster-rcnn介绍
+  </a>
+  
+    <nav class="md-nav" aria-label="一、faster-rcnn介绍">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1rpn" class="md-nav__link">
+    1.使用RPN生成建议框
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2roi-pooling" class="md-nav__link">
+    2.ROI pooling层
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    3.小结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#backbone" class="md-nav__link">
+    二、主干网络（backbone）
+  </a>
+  
+    <nav class="md-nav" aria-label="二、主干网络（backbone）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1resnet50" class="md-nav__link">
+    1.ResNet50基本模块
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2bottleneck" class="md-nav__link">
+    2.Bottleneck
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-resnet" class="md-nav__link">
+    3. ResNet
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#proposal" class="md-nav__link">
+    三、Proposal
+  </a>
+  
+    <nav class="md-nav" aria-label="三、Proposal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1regionproposalnetwork" class="md-nav__link">
+    1.RegionProposalNetwork
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2proposal" class="md-nav__link">
+    2.Proposal建议框的解码
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    3.小结
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#roipooling" class="md-nav__link">
+    四、RoiPooling
+  </a>
+  
+    <nav class="md-nav" aria-label="四、RoiPooling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#roipooling_1" class="md-nav__link">
+    RoiPooling层工作
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    五、在原图上进行绘制
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    六、整体流程
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/yanghualv7/yanghualv7.github.io/edit/master/docs/Documentation/study-notes/faster-rcnn/faster-rcnn-学习笔记.md" title="编辑此页" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="faster-rcnn-">faster-rcnn-学习笔记<a class="headerlink" href="#faster-rcnn-" title="Permanent link">&para;</a></h1>
+<p>该笔记基于<a href="https://www.bilibili.com/video/BV1BK41157Vs?p=1&amp;vd_source=7cbfb227bb3d5386a067808fd725b17b"><strong>B站up主：Bubbliiiing</strong></a>的视频讲解编写</p>
+<p><a href="https://github.com/bubbliiiing/faster-rcnn-pytorch"><strong>源码地址：https://github.com/bubbliiiing/faster-rcnn-pytorch</strong></a></p>
+<p><a href="https://blog.csdn.net/weixin_44791964/article/details/105739918"><strong>作者博客地址：https://blog.csdn.net/weixin_44791964/article/details/105739918</strong></a></p>
+<p><strong>参考资料：</strong><a href="https://zhuanlan.zhihu.com/p/31426458">一文读懂Faster RCNN</a> </p>
+<h2 id="faster-rcnn">一、faster-rcnn介绍<a class="headerlink" href="#faster-rcnn" title="Permanent link">&para;</a></h2>
+<p>​   计算机如何确定一张图片的目标的位置呢？只需要传入四个参数。</p>
+<p><img alt="image-20231105161528582" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231105161528582.png" /></p>
+<p>​   当一张图片传入faster-rcnn中会被resize到最小边是600的shape上，长宽比保持不变，然后将图片传入主干网络(backbone),图片被分割成<span class="arithmatex">\(38\times38\)</span>的特征层（网格），每个网格存在若干个先验框。</p>
+<h3 id="1rpn">1.使用RPN生成建议框<a class="headerlink" href="#1rpn" title="Permanent link">&para;</a></h3>
+<ul>
+<li>RPN网络结构</li>
+<li>RPN结构，有两条线。上面一条通过softmax分类anchors获得positive和negative分类，下面一条用于计算对于anchors的bounding box regression偏移量，以获得精确的proposal。</li>
+<li>最后的Proposal层则负责综合positive anchors和对应bounding box regression偏移量获取修正后的proposals，同时剔除太小和超出边界的proposals。其实整个网络到了Proposal Layer这里，就完成了相当于目标定位的功能。</li>
+<li>在拿到feature map后，先经过一个3x3卷积。</li>
+</ul>
+<p><img alt="image-20231105180626530" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231105180626530.png" /></p>
+<ul>
+<li>生成候选框的过程包括两个关键步骤：</li>
+<li>锚框生成（Anchor Box Generation）：在滑动窗口的每个位置，RPN在不同尺度和长宽比的锚框上生成多个候选框。这些锚框是预定义的一组矩形框，固定大小但具有不同尺度和长宽比。</li>
+<li>
+<p>候选框分类和回归：对于每个锚框，RPN通过卷积操作将其映射到一个低维特征向量。然后，这个特征向量被用于预测锚框中是否包含目标以及对应的边界框回归参数。通过分类和回归的操作，RPN可以筛选出具有高目标可能性的建议框，并根据预测的边界框回归参数调整建议框位置。</p>
+</li>
+<li>
+<p>特征层截取</p>
+</li>
+<li>
+<p>通过建议框在特征层上进行截取，截取到的不同特征层就能反映原图的不同位置</p>
+</li>
+<li>
+<p>anchor</p>
+</li>
+<li>
+<p>所谓anchors，实际上就是一组由rpn/generate_anchors.py生成的矩形。直接运行作者demo中的generate_anchors.py可以得到以下输出：</p>
+<div class="highlight"><pre><span></span><code><span class="err">其中每行的</span><span class="mi">4</span><span class="err">个值(x</span><span class="mi">1</span><span class="p">,</span><span class="err">y</span><span class="mi">1</span><span class="p">,</span><span class="err">x</span><span class="mi">2</span><span class="p">,</span><span class="err">y</span><span class="mi">2</span><span class="err">)表矩形左上和右下角点坐标</span><span class="p">,</span><span class="mi">9</span><span class="err">个矩形共有</span><span class="mi">3</span><span class="err">种形状。这</span><span class="mi">9</span><span class="err">个a</span><span class="kc">n</span><span class="err">chor的大小按照三种长宽比ra</span><span class="kc">t</span><span class="err">io</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="err">，</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="err">，</span><span class="mi">2</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span><span class="err">设置，具体大小根据输入图像的原始目标大小灵活设置。</span>
+<span class="p">[[</span><span class="w"> </span><span class="mf">-84.</span><span class="w">  </span><span class="mf">-40.</span><span class="w">   </span><span class="mf">99.</span><span class="w">   </span><span class="mf">55.</span><span class="p">]</span>
+<span class="w"> </span><span class="p">[</span><span class="mf">-176.</span><span class="w">  </span><span class="mf">-88.</span><span class="w">  </span><span class="mf">191.</span><span class="w">  </span><span class="mf">103.</span><span class="p">]</span>
+<span class="w"> </span><span class="p">[</span><span class="mf">-360.</span><span class="w"> </span><span class="mf">-184.</span><span class="w">  </span><span class="mf">375.</span><span class="w">  </span><span class="mf">199.</span><span class="p">]</span>
+<span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mf">-56.</span><span class="w">  </span><span class="mf">-56.</span><span class="w">   </span><span class="mf">71.</span><span class="w">   </span><span class="mf">71.</span><span class="p">]</span>
+<span class="w"> </span><span class="p">[</span><span class="mf">-120.</span><span class="w"> </span><span class="mf">-120.</span><span class="w">  </span><span class="mf">135.</span><span class="w">  </span><span class="mf">135.</span><span class="p">]</span>
+<span class="w"> </span><span class="p">[</span><span class="mf">-248.</span><span class="w"> </span><span class="mf">-248.</span><span class="w">  </span><span class="mf">263.</span><span class="w">  </span><span class="mf">263.</span><span class="p">]</span>
+<span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mf">-36.</span><span class="w">  </span><span class="mf">-80.</span><span class="w">   </span><span class="mf">51.</span><span class="w">   </span><span class="mf">95.</span><span class="p">]</span>
+<span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="mf">-80.</span><span class="w"> </span><span class="mf">-168.</span><span class="w">   </span><span class="mf">95.</span><span class="w">  </span><span class="mf">183.</span><span class="p">]</span>
+<span class="w"> </span><span class="p">[</span><span class="mf">-168.</span><span class="w"> </span><span class="mf">-344.</span><span class="w">  </span><span class="mf">183.</span><span class="w">  </span><span class="mf">359.</span><span class="p">]]</span>
+</code></pre></div>
+<p><img alt="image-20231105174012194" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231105174012194.png" /></p>
+</li>
+<li>
+<p>分类</p>
+</li>
+<li>
+<p>分类任务是指将候选框中的目标进行分类，确定其所属的类别。通常情况下，分类任务使用softmax函数作为激活函数，将候选框对应的特征映射为各个类别的概率分布。通过比较各个类别的概率分数，可以确定候选框最可能属于哪个类别。</p>
+</li>
+<li>通过1x1卷积得到的输出，该1x1卷积的caffe prototxt定义如下：</li>
+<li>经过该卷积的输出图像为WxHx18大小,对应了feature maps每一个点都有9个anchors，同时每个anchors又有可能是positive和negative，所有这些信息都保存WxHx(9*2)大小的矩阵</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">layer</span> <span class="p">{</span>
+  <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;rpn_cls_score&quot;</span>
+  <span class="nb">type</span><span class="p">:</span> <span class="s2">&quot;Convolution&quot;</span>
+  <span class="n">bottom</span><span class="p">:</span> <span class="s2">&quot;rpn/output&quot;</span>
+  <span class="n">top</span><span class="p">:</span> <span class="s2">&quot;rpn_cls_score&quot;</span>
+  <span class="n">convolution_param</span> <span class="p">{</span>
+    <span class="n">num_output</span><span class="p">:</span> <span class="mi">18</span>   <span class="c1"># 2(positive/negative) * 9(anchors)</span>
+    <span class="n">kernel_size</span><span class="p">:</span> <span class="mi">1</span> <span class="n">pad</span><span class="p">:</span> <span class="mi">0</span> <span class="n">stride</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>因为这里是二分类判断positive和negative，所以该feature map上每个点的每个anchor对应2个值，表示目标和背景的概率</li>
+<li>Reshape层是技术细节问题，对feature map进行维度变换，使得有一个单独的维度为2，方便在该维度上进行softmax操作，之后再Reshape恢复原状。</li>
+<li>后面接softmax分类获得positive anchors，也就相当于初步提取了选目标框（bounding box）</li>
+</ul>
+<p><img alt="image-20231105181715752" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231105181715752.png" /></p>
+<ul>
+<li>
+<p>回归</p>
+</li>
+<li>
+<p>回归任务是指对候选框的精确位置进行调整，以更好地匹配目标的真实位置。回归任务通常使用回归器来预测候选框的偏移量，其中包括水平和垂直方向上的平移量以及宽度和高度的缩放比例。这些预测的偏移量可以应用于候选框的初始位置和尺寸，以获得更精确的目标位置。</p>
+</li>
+<li>如图所示绿色框为飞机的Ground Truth(GT)，红色为提取的positive anchors，即便红色的框被分类器识别为飞机，但是由于红色的框定位不准，这张图相当于没有正确的检测出飞机。所以我们希望采用一种方法对红色的框进行微调，使得positive anchors和GT更加接近。</li>
+</ul>
+<p><img alt="image-20231105185110219" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231105185110219.png" /></p>
+<ul>
+<li>通过1x1卷积得到的输出，该1x1卷积的caffe prototxt定义如下：</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">layer</span> <span class="p">{</span>
+  <span class="n">name</span><span class="p">:</span> <span class="s2">&quot;rpn_bbox_pred&quot;</span>
+  <span class="nb">type</span><span class="p">:</span> <span class="s2">&quot;Convolution&quot;</span>
+  <span class="n">bottom</span><span class="p">:</span> <span class="s2">&quot;rpn/output&quot;</span>
+  <span class="n">top</span><span class="p">:</span> <span class="s2">&quot;rpn_bbox_pred&quot;</span>
+  <span class="n">convolution_param</span> <span class="p">{</span>
+    <span class="n">num_output</span><span class="p">:</span> <span class="mi">36</span>   <span class="c1"># 4 * 9(anchors)</span>
+    <span class="n">kernel_size</span><span class="p">:</span> <span class="mi">1</span> <span class="n">pad</span><span class="p">:</span> <span class="mi">0</span> <span class="n">stride</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>经过该卷积输出图像为WxHx36，在caffe blob存储为[1, 4x9, H, W]，这里相当于feature maps每个点都有9个anchors，每个anchors又都有4个用于回归的变换量。</li>
+</ul>
+<p><img alt="image-20231105185635487" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231105185635487.png" /></p>
+<p>​   <strong>其实RPN最终就是在原图尺度上，设置了密密麻麻的候选Anchor。然后用cnn去判断哪些Anchor是里面有目标的positive anchor，哪些是没目标的negative anchor。所以，仅仅是个二分类而已</strong></p>
+<p><img alt="image-20231105170910804" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231105170910804.png" /></p>
+<h3 id="2roi-pooling">2.ROI pooling层<a class="headerlink" href="#2roi-pooling" title="Permanent link">&para;</a></h3>
+<p>​   ROI pooling层将截取到的不同大小的特征层区域resize到同样大小，再通过分类与回归网络来判断截取的区域是否有目标，并对建议框进行调整，这个结果就是最终的结果。</p>
+<p><img alt="image-20231105172116915" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231105172116915.png" /></p>
+<ul>
+<li>
+<p>当feature map传入ROI pooling层中，利用建议框对feature map进行截取</p>
+</li>
+<li>
+<p>ROI pooling层会对所有的feature map进行分区域池化，使得所有的shape相同。</p>
+</li>
+<li>
+<p>接着使用得到的feature map进行分类和回归</p>
+</li>
+<li>
+<p>回归预测会对建议框进行调整，而分类预测会判断建议框中是否真的存在目标 。</p>
+</li>
+</ul>
+<p><img alt="image-20231105202919516" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231105202919516.png" /></p>
+<h3 id="3">3.小结<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p>​   faster-rcnn将预测过程分为两步</p>
+<ul>
+<li>粗略的筛选（建议框）</li>
+<li>精细的调整（回归，预测）</li>
+</ul>
+<p><img alt="image-20231105172402091" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231105172402091.png" /></p>
+<h2 id="backbone">二、主干网络（backbone）<a class="headerlink" href="#backbone" title="Permanent link">&para;</a></h2>
+<p>​   本文档使用ResNet50作为主干网络。</p>
+<h3 id="1resnet50">1.ResNet50基本模块<a class="headerlink" href="#1resnet50" title="Permanent link">&para;</a></h3>
+<p>两者均为残差网络</p>
+<ul>
+<li>
+<p><strong>Conv Block</strong></p>
+</li>
+<li>
+<p>该模块输入和输出不想同，不能进行连续串联，主要用于改变网络围维度</p>
+</li>
+<li>残差边有卷积（通过改变卷积的步长和通道数改变输出特征层的通道数）</li>
+<li>结构如下:</li>
+</ul>
+<p><img alt="image-20231105205907434" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231105205907434.png" /></p>
+<ul>
+<li>
+<p><strong>Identity Block</strong></p>
+</li>
+<li>
+<p>输入维度和输出维度相同，可以串联，用于加深网络。</p>
+</li>
+<li>结构如下：</li>
+</ul>
+<p><img alt="image-20231105210059231" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231105210059231.png" /></p>
+<h3 id="2bottleneck">2.Bottleneck<a class="headerlink" href="#2bottleneck" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Bottleneck</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="n">expansion</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inplanes</span><span class="p">,</span> <span class="n">planes</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">downsample</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Bottleneck</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">inplanes</span><span class="p">,</span> <span class="n">planes</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bn1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">planes</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">planes</span><span class="p">,</span> <span class="n">planes</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bn2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">planes</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv3</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">planes</span><span class="p">,</span> <span class="n">planes</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bn3</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">planes</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">downsample</span> <span class="o">=</span> <span class="n">downsample</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">residual</span> <span class="o">=</span> <span class="n">x</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn1</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv2</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn2</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv3</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn3</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">downsample</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">residual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">downsample</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="n">out</span> <span class="o">+=</span> <span class="n">residual</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">out</span>
+</code></pre></div>
+<p><img alt="image-20231105212856697" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231105212856697.png" /></p>
+<p>​   这段代码定义了一个Bottleneck块，它是ResNet中的基本模块之一。Bottleneck块通过降低特征图的维度，减少计算量，同时通过跳跃连接保留低层特征，提高模型的性能。</p>
+<p>下面是对这段代码的解释：</p>
+<ul>
+<li><code>expansion = 4</code>：扩展系数，用于将输入通道数扩展到输出通道数的倍数。</li>
+<li><code>__init__</code>方法：初始化函数，定义了Bottleneck块的结构。它接受输入通道数<code>inplanes</code>、输出通道数<code>planes</code>、步长<code>stride</code>和下采样操作<code>downsample</code>作为参数。在初始化中，定义了三个卷积层和三个批归一化层，以及激活函数ReLU和降采样操作。</li>
+<li><code>forward</code>方法：前向传播函数，定义了Bottleneck块的计算过程。在前向传播中，首先将输入<code>x</code>保存到<code>residual</code>中，然后通过卷积、批归一化和ReLU激活函数进行特征提取。接着，通过第三个卷积层和批归一化层将特征图的通道数扩展到输入通道数的四倍。如果存在（残差边上有卷积）下采样操作，则对输入<code>x</code>进行下采样操作。最后，将下采样结果与特征图相加，并再次经过ReLU激活函数。</li>
+</ul>
+<p>​   Bottleneck块的设计可以有效地减少模型的参数量和计算量，同时通过跳跃连接传递低层特征信息，提高模型的表达能力和性能。</p>
+<p>​   首先通过 <span class="arithmatex">\(1\times1\)</span> 的卷积压缩通道数，接着使用 <span class="arithmatex">\(3\times3\)</span> 卷积进行特征提取，再利用 <span class="arithmatex">\(1\times 1\)</span> 卷积扩张通道数，这样的一个瓶颈结构可以更好的提取特征加深整个网络，减少参数量。</p>
+<ol>
+<li>1x1卷积的作用是降低输入通道的维度。在Bottleneck块中，首先使用1x1卷积将输入通道数从<code>inplanes</code>降低到<code>planes</code>，这样可以减少后续3x3卷积的计算量和参数量。因为1x1卷积的参数量只取决于输入通道数和输出通道数，与输入特征图的尺寸大小无关。</li>
+<li>3x3卷积用于进行特征提取。通过使用较小的卷积核，可以在保持接受野（receptive field）大小的同时，减少卷积操作的计算量和参数量。相比于使用较大的卷积核，3x3卷积可以在更少的参数量下实现类似的感受野。</li>
+</ol>
+<h3 id="3-resnet">3. ResNet<a class="headerlink" href="#3-resnet" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ResNet</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">layers</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   假设输入进来的图片是600,600,3</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inplanes</span> <span class="o">=</span> <span class="mi">64</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ResNet</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="c1"># 600,600,3 -&gt; 300,300,64</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">kernel_size</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bn1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="mi">64</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">relu</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># 300,300,64 -&gt; 150,150,64</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maxpool</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MaxPool2d</span><span class="p">(</span><span class="n">kernel_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ceil_mode</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># 150,150,64 -&gt; 150,150,256</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_layer</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="n">layers</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># 150,150,256 -&gt; 75,75,512</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_layer</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="mi">128</span><span class="p">,</span> <span class="n">layers</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># 75,75,512 -&gt; 38,38,1024 到这里可以获得一个38,38,1024的共享特征层</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer3</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_layer</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="mi">256</span><span class="p">,</span> <span class="n">layers</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="c1"># self.layer4被用在classifier模型中</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">layer4</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_layer</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="n">layers</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">stride</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">avgpool</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">AvgPool2d</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">512</span> <span class="o">*</span> <span class="n">block</span><span class="o">.</span><span class="n">expansion</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">):</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">kernel_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">m</span><span class="o">.</span><span class="n">out_channels</span>
+                <span class="n">m</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">normal_</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span> <span class="o">/</span> <span class="n">n</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">):</span>
+                <span class="n">m</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">fill_</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">m</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">zero_</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_make_layer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">block</span><span class="p">,</span> <span class="n">planes</span><span class="p">,</span> <span class="n">blocks</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">downsample</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="c1">#-------------------------------------------------------------------#</span>
+        <span class="c1">#   当模型需要进行高和宽的压缩的时候，就需要用到残差边的downsample</span>
+        <span class="c1">#-------------------------------------------------------------------#</span>
+        <span class="k">if</span> <span class="n">stride</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">inplanes</span> <span class="o">!=</span> <span class="n">planes</span> <span class="o">*</span> <span class="n">block</span><span class="o">.</span><span class="n">expansion</span><span class="p">:</span>
+            <span class="n">downsample</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+                <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inplanes</span><span class="p">,</span> <span class="n">planes</span> <span class="o">*</span> <span class="n">block</span><span class="o">.</span><span class="n">expansion</span><span class="p">,</span><span class="n">kernel_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="n">stride</span><span class="p">,</span> <span class="n">bias</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+                <span class="n">nn</span><span class="o">.</span><span class="n">BatchNorm2d</span><span class="p">(</span><span class="n">planes</span> <span class="o">*</span> <span class="n">block</span><span class="o">.</span><span class="n">expansion</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">block</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inplanes</span><span class="p">,</span> <span class="n">planes</span><span class="p">,</span> <span class="n">stride</span><span class="p">,</span> <span class="n">downsample</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inplanes</span> <span class="o">=</span> <span class="n">planes</span> <span class="o">*</span> <span class="n">block</span><span class="o">.</span><span class="n">expansion</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">blocks</span><span class="p">):</span>
+            <span class="n">layers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">block</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inplanes</span><span class="p">,</span> <span class="n">planes</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="o">*</span><span class="n">layers</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bn1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maxpool</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer1</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer2</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer3</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">layer4</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">avgpool</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span>
+</code></pre></div>
+<p><img alt="image-20231106011501659" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231106011501659.png" /></p>
+<p>​   <code>ResNet</code>类通过调用<code>_make_layer</code>方法来构建多个<code>Bottleneck</code>块，将它们组合成一个完整的ResNet模型。<code>ResNet</code>类是整个模型的骨架，而<code>Bottleneck</code>类是模型中的基本模块。通过不同的块的堆叠，可以构建不同深度的ResNet模型。<code>ResNet</code>是一个完整的深度卷积神经网络模型，而<code>Bottleneck</code>是ResNet模型中的一个基本构建块。</p>
+<p>​   Faster-RCNN的主干特征提取网络部分只包含了长宽压缩了四次的内容，第五次压缩后的内容在ROI中使用。即Faster-RCNN在主干特征提取网络所用的网络层如图所示。</p>
+<p>以输入的图片为600x600为例，shape变化如下：</p>
+<p><img alt="image-20231106010523988" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231106010523988.png" /></p>
+<h2 id="proposal">三、Proposal<a class="headerlink" href="#proposal" title="Permanent link">&para;</a></h2>
+<h3 id="1regionproposalnetwork">1.RegionProposalNetwork<a class="headerlink" href="#1regionproposalnetwork" title="Permanent link">&para;</a></h3>
+<p><strong>获得Proposal建议框</strong></p>
+<p>​   主干网络获得的Feature Map，其有两个应用，一个是和ROIPooling结合使用、另一个是进行一次3x3的卷积后，进行一个18通道的1x1卷积，还有一个36通道的1x1卷积。</p>
+<ul>
+<li><span class="arithmatex">\(9\times 4\)</span> 卷积：</li>
+<li>用于预测 <strong>feature map上</strong> <strong>每一个网格点上 每一个先验框</strong>的变化情况。</li>
+<li><strong>因为Faster-RCNN的预测结果需要结合先验框获得预测框，预测结果就是先验框的变化情况。</strong></li>
+<li><span class="arithmatex">\(9\times2\)</span> 卷积：</li>
+<li>用于预测 <strong>feature map上</strong> <strong>每一个网格点上</strong> <strong>每一个预测框</strong>内部是否包含了物体，<strong>序号为1的内容为包含物体的概率</strong>。</li>
+</ul>
+<p>​   当我们输入的图片的shape是600x600x3的时候，公用特征层的shape就是38x38x1024，相当于把输入进来的图像分割成38x38的网格，然后每个网格存在9个先验框，这些先验框有不同的大小，在图像上密密麻麻。</p>
+<p>​   <span class="arithmatex">\(9\times 4\)</span>的卷积的结果会对这些先验框进行调整，获得一个新的框。
+​   <span class="arithmatex">\(9 \times 2\)</span>的卷积会判断上述获得的新框是否包含物体。</p>
+<p>​   到这里我们可以获得了一些有用的框，这些框会利用9 x 2的卷积判断是否存在物体。到此为止还只是粗略的一个框的获取，也就是一个建议框。然后我们会在建议框里面继续找东西。</p>
+<ul>
+<li>源码：</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">RegionProposalNetwork</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> 
+        <span class="n">in_channels</span>     <span class="o">=</span> <span class="mi">512</span><span class="p">,</span> 
+        <span class="n">mid_channels</span>    <span class="o">=</span> <span class="mi">512</span><span class="p">,</span> 
+        <span class="n">ratios</span>          <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+        <span class="n">anchor_scales</span>   <span class="o">=</span> <span class="p">[</span><span class="mi">8</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">32</span><span class="p">],</span> 
+        <span class="n">feat_stride</span>     <span class="o">=</span> <span class="mi">16</span><span class="p">,</span>
+        <span class="n">mode</span>            <span class="o">=</span> <span class="s2">&quot;training&quot;</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RegionProposalNetwork</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   生成基础先验框，shape为[9, 4]</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">anchor_base</span>    <span class="o">=</span> <span class="n">generate_anchor_base</span><span class="p">(</span><span class="n">anchor_scales</span> <span class="o">=</span> <span class="n">anchor_scales</span><span class="p">,</span> <span class="n">ratios</span> <span class="o">=</span> <span class="n">ratios</span><span class="p">)</span>
+        <span class="n">n_anchor</span>            <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">anchor_base</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   先进行一个3x3的卷积，可理解为特征整合</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span>  <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">mid_channels</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   分类预测先验框内部是否包含物体</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">score</span>  <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">mid_channels</span><span class="p">,</span> <span class="n">n_anchor</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   回归预测对先验框进行调整</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loc</span>    <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">mid_channels</span><span class="p">,</span> <span class="n">n_anchor</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   特征点间距步长</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">feat_stride</span>    <span class="o">=</span> <span class="n">feat_stride</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   用于对建议框解码并进行非极大抑制</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proposal_layer</span> <span class="o">=</span> <span class="n">ProposalCreator</span><span class="p">(</span><span class="n">mode</span><span class="p">)</span>
+        <span class="c1">#--------------------------------------#</span>
+        <span class="c1">#   对FPN的网络部分进行权值初始化</span>
+        <span class="c1">#--------------------------------------#</span>
+        <span class="n">normal_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+        <span class="n">normal_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+        <span class="n">normal_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">img_size</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.</span><span class="p">):</span>
+        <span class="n">n</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   先进行一个3x3的卷积，可理解为特征整合</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   回归预测对先验框进行调整</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="n">rpn_locs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">rpn_locs</span> <span class="o">=</span> <span class="n">rpn_locs</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   分类预测先验框内部是否包含物体</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="n">rpn_scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">rpn_scores</span> <span class="o">=</span> <span class="n">rpn_scores</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1">#-------------------------------------------------------------------------------#</span>
+        <span class="c1">#   进行softmax概率计算，每个先验框只有两个判别结果</span>
+        <span class="c1">#   内部包含物体或者内部不包含物体，rpn_softmax_scores[:, :, 1]的内容为包含物体的概率</span>
+        <span class="c1">#-------------------------------------------------------------------------------#</span>
+        <span class="n">rpn_softmax_scores</span>  <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">rpn_scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">rpn_fg_scores</span>       <span class="o">=</span> <span class="n">rpn_softmax_scores</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
+        <span class="n">rpn_fg_scores</span>       <span class="o">=</span> <span class="n">rpn_fg_scores</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1">#-------------------------------------------------------------------------------#</span>
+        <span class="c1">#   生成先验框，此时获得的anchor是布满网格点的，当输入图片为600,600,3的时候，shape为(12996, 4)</span>
+        <span class="c1">#-------------------------------------------------------------------------------#</span>
+        <span class="n">anchor</span> <span class="o">=</span> <span class="n">_enumerate_shifted_anchor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">anchor_base</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat_stride</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+        <span class="n">rois</span>        <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">roi_indices</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">roi</span>         <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">proposal_layer</span><span class="p">(</span><span class="n">rpn_locs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">rpn_fg_scores</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">anchor</span><span class="p">,</span> <span class="n">img_size</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span><span class="p">)</span>
+            <span class="n">batch_index</span> <span class="o">=</span> <span class="n">i</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">roi</span><span class="p">),))</span>
+            <span class="n">rois</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">roi</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+            <span class="n">roi_indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">batch_index</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+
+        <span class="n">rois</span>        <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">rois</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">type_as</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">roi_indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">roi_indices</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">type_as</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">anchor</span>      <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">anchor</span><span class="p">)</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">float</span><span class="p">()</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">rpn_locs</span><span class="p">,</span> <span class="n">rpn_scores</span><span class="p">,</span> <span class="n">rois</span><span class="p">,</span> <span class="n">roi_indices</span><span class="p">,</span> <span class="n">anchor</span>
+</code></pre></div>
+<p>根据这段代码，可以生成以下思维导图大纲：</p>
+<ul>
+<li>RegionProposalNetwork类</li>
+<li>
+<p>初始化方法：<strong>init</strong>(self, in_channels=512, mid_channels=512, ratios=[0.5, 1, 2], anchor_scales=[8, 16, 32], feat_stride=16, mode="training")</p>
+<ul>
+<li>创建基础先验框anchor_base，形状为[9, 4]</li>
+<li>获取先验框的数量n_anchor</li>
+<li>创建卷积层conv1，输入通道数为in_channels，输出通道数为mid_channels，卷积核大小为3，步长为1，填充为1</li>
+<li>创建分类预测层score，输入通道数为mid_channels，输出通道数为n_anchor * 2，卷积核大小为1，步长为1，填充为0</li>
+<li>创建回归预测层loc，输入通道数为mid_channels，输出通道数为n_anchor * 4，卷积核大小为1，步长为1，填充为0</li>
+<li>设置特征点间距步长feat_stride</li>
+<li>创建ProposalCreator对象proposal_layer，用于对建议框进行解码和非极大抑制</li>
+<li>对conv1、score、loc的权值进行初始化</li>
+</ul>
+</li>
+<li>
+<p>前向传播方法：forward(self, x, img_size, scale=1.)</p>
+<ul>
+<li>获取输入特征图x的形状</li>
+<li>经过卷积层conv1并使用ReLU激活函数</li>
+<li>经过回归预测层loc，并调整形状</li>
+<li>经过分类预测层score，并调整形状</li>
+<li>对分类预测得分进行softmax概率计算，得到包含物体的概率rpn_fg_scores</li>
+<li>生成先验框anchor，并进行偏移、缩放等调整</li>
+<li>使用ProposalCreator对先验框进行解码和非极大抑制，得到建议框rois和对应的图像索引roi_indices</li>
+<li>返回rpn_locs、rpn_scores、rois、roi_indices和anchor</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code>        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   先进行一个3x3的卷积，可理解为特征整合</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conv1</span>  <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">in_channels</span><span class="p">,</span> <span class="n">mid_channels</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   分类预测先验框内部是否包含物体</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">score</span>  <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">mid_channels</span><span class="p">,</span> <span class="n">n_anchor</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   回归预测对先验框进行调整</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loc</span>    <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Conv2d</span><span class="p">(</span><span class="n">mid_channels</span><span class="p">,</span> <span class="n">n_anchor</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+
+
+        <span class="n">n</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   先进行一个3x3的卷积，可理解为特征整合</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   回归预测对先验框进行调整</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="n">rpn_locs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">rpn_locs</span> <span class="o">=</span> <span class="n">rpn_locs</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">以下是对代码rpn_locs.permute(0, 2, 3, 1).contiguous().view(n, -1, 4)中每一步操作的解释：</span>
+
+<span class="sd">rpn_locs.permute(0, 2, 3, 1): 这一步通过调用permute函数对rpn_locs进行维度置换操作。使用参数(0, 2, 3, 1)将原始的维度顺序(batch_size, channels, height, width)变换为(batch_size, height, width, channels)。这样做的目的是为了后续的contiguous操作做准备。</span>
+
+<span class="sd">contiguous(): 这一步调用contiguous函数，将重新排列维度后的rpn_locs张量变为连续的内存布局。因为在进行view操作之前，需要保证张量是连续的，否则会出现错误。</span>
+
+<span class="sd">view(n, -1, 4): 这一步调用view函数，将rpn_locs张量进行形状变换。参数(n, -1, 4)中，n表示batch大小，-1表示自动计算该维度的大小，4表示每个先验框的回归预测结果的维度。这样操作的目的是将rpn_locs从原始的形状(batch_size, height, width, channels)变换为形状为(batch_size, -1, 4)的张量，第二维度的内容变为了每一个先验框，其中-1的大小会根据其他维度的大小自动计算。</span>
+
+<span class="sd">综合起来，上述代码的作用是将rpn_locs张量进行维度置换、内存连续化和形状变换操作，最终得到形状为(batch_size, -1, 4)的张量。其中每个元素表示一个先验框的回归预测结果，具有4个值用于表示坐标偏移量。</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+        <span class="c1">#-------------------------------------------------------------------------------#</span>
+        <span class="c1">#   进行softmax概率计算，每个先验框只有两个判别结果</span>
+        <span class="c1">#   内部包含物体或者内部不包含物体，rpn_softmax_scores[:, :, 1]的内容为包含物体的概率</span>
+        <span class="c1">#-------------------------------------------------------------------------------#</span>
+        <span class="n">rpn_softmax_scores</span>  <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">rpn_scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">rpn_fg_scores</span>       <span class="o">=</span> <span class="n">rpn_softmax_scores</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
+        <span class="n">rpn_fg_scores</span>       <span class="o">=</span> <span class="n">rpn_fg_scores</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">上述代码片段的作用是对分类预测结果进行softmax概率计算，以及提取包含物体的概率。</span>
+
+<span class="sd">F.softmax(rpn_scores, dim=-1): 这一行代码使用F.softmax函数对rpn_scores进行softmax概率计算。rpn_scores是分类预测的输出结果，它的形状为(batch_size, num_anchors, 2)，其中2表示两个判别结果（内部包含物体或者内部不包含物体）。softmax函数将每个先验框的两个判别结果转换为一个概率分布，使得每个判别结果的值介于0和1之间，并且所有值的和为1。</span>
+
+<span class="sd">rpn_softmax_scores[:, :, 1].contiguous(): 这一行代码提取了经过softmax概率计算后的结果中，表示包含物体的概率值。rpn_softmax_scores的形状为(batch_size, num_anchors, 2)，通过使用索引[:, :, 1]将包含物体的概率值提取出来。结果是一个形状为(batch_size, num_anchors)的张量。</span>
+
+<span class="sd">rpn_fg_scores.view(n, -1): 这一行代码对提取出来的包含物体的概率值进行形状变换。rpn_fg_scores的形状为(batch_size, num_anchors)，通过调用view函数，将其变换为形状为(n, -1)的张量，其中n表示batch大小，-1表示自动计算该维度的大小。这样操作的目的是为了方便后续处理。</span>
+
+<span class="sd">综合起来，上述代码的作用是对分类预测结果进行softmax概率计算，提取出表示包含物体的概率值，并将其进行形状变换，得到形状为(n, -1)的张量，其中每个元素表示一个先验框内部包含物体的概率值。</span>
+<span class="sd">&#39;&#39;&#39;</span>
+</code></pre></div>
+<h3 id="2proposal">2.Proposal建议框的解码<a class="headerlink" href="#2proposal" title="Permanent link">&para;</a></h3>
+<ul>
+<li>先验框</li>
+<li>调用<code>anchors.py</code>结果</li>
+</ul>
+<p><img alt="image-20231106175015431" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231106175015431.png" /></p>
+<p><img alt="image-20231106175446297" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231106175446297.png" /></p>
+<ul>
+<li>
+<p>建议框生成过程</p>
+</li>
+<li>
+<p>获得建议框网络的预测结果</p>
+</li>
+<li><span class="arithmatex">\(rpn.py \rightarrow RegionProposalNetwork \rightarrow forward\)</span></li>
+</ul>
+<div class="highlight"><pre><span></span><code>        <span class="n">n</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   先进行一个3x3的卷积，可理解为特征整合</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">conv1</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   回归预测对先验框进行调整</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="n">rpn_locs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">loc</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">rpn_locs</span> <span class="o">=</span> <span class="n">rpn_locs</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="c1">#   分类预测先验框内部是否包含物体</span>
+        <span class="c1">#-----------------------------------------#</span>
+        <span class="n">rpn_scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">rpn_scores</span> <span class="o">=</span> <span class="n">rpn_scores</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1">#----------------------------------------------------------------------------#</span>
+        <span class="c1">#   进行softmax概率计算，每个先验框只有两个判别结果</span>
+        <span class="c1">#   内部包含物体或者内部不包含物体，rpn_softmax_scores[:, :, 1]的内容为包含物体的概率</span>
+        <span class="c1">#----------------------------------------------------------------------------#</span>
+        <span class="n">rpn_softmax_scores</span>  <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">softmax</span><span class="p">(</span><span class="n">rpn_scores</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">rpn_fg_scores</span>       <span class="o">=</span> <span class="n">rpn_softmax_scores</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
+        <span class="n">rpn_fg_scores</span>       <span class="o">=</span> <span class="n">rpn_fg_scores</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>生成先验框</li>
+</ul>
+<div class="highlight"><pre><span></span><code>        <span class="c1">#----------------------------------------------------------------------------#</span>
+        <span class="c1">#   生成先验框，此时获得的anchor是布满网格点的，当输入图片为600,600,3的时候，shape为(12996, 4)</span>
+        <span class="c1">#----------------------------------------------------------------------------#</span>
+        <span class="n">anchor</span> <span class="o">=</span> <span class="n">_enumerate_shifted_anchor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">anchor_base</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">feat_stride</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>
+<p>利用建议框网络对先验框进行调整，再进行筛选，获得最终的建议框</p>
+</li>
+<li>
+<p>通过第二步我们获得了38x38x9个先验框的预测结果。预测结果包含两部分。</p>
+</li>
+</ul>
+<p><strong>9 x 4的卷积</strong> 用于预测 <strong>公用特征层上</strong> <strong>每一个网格点上 每一个先验框</strong>的变化情况。</p>
+<p><strong>9 x 2的卷积</strong> 用于预测 <strong>公用特征层上</strong> <strong>每一个网格点上</strong> <strong>每一个预测框</strong>内部是否包含了物体。</p>
+<p>相当于就是将整个图像分成38x38个网格；然后从每个网格中心建立9个先验框，一共38x38x9个，12996个先验框。</p>
+<p><strong>当输入图像shape不同时，先验框的数量也会发生改变。</strong></p>
+<p><img alt="image-20231107083757957" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231107083757957.png" /></p>
+<p><img alt="image-20231107084242267" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231107084242267.png" /></p>
+<p>先验框虽然可以代表一定的<strong>框的位置信息与框的大小信息</strong>，但是其是有限的，无法表示任意情况，因此还需要调整。</p>
+<ul>
+<li><strong>9 x 4中的9表示了这个网格点所包含的先验框数量，其中的4表示了框的中心与长宽的调整情况。</strong></li>
+</ul>
+<p>实现代码如下：</p>
+<p><img alt="image-20231107084732495" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231107084732495.png" /></p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">ProposalCreator</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> 
+        <span class="n">mode</span><span class="p">,</span> 
+        <span class="n">nms_iou</span>             <span class="o">=</span> <span class="mf">0.7</span><span class="p">,</span>
+        <span class="n">n_train_pre_nms</span>     <span class="o">=</span> <span class="mi">12000</span><span class="p">,</span>
+        <span class="n">n_train_post_nms</span>    <span class="o">=</span> <span class="mi">600</span><span class="p">,</span>
+        <span class="n">n_test_pre_nms</span>      <span class="o">=</span> <span class="mi">3000</span><span class="p">,</span>
+        <span class="n">n_test_post_nms</span>     <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
+        <span class="n">min_size</span>            <span class="o">=</span> <span class="mi">16</span>
+
+    <span class="p">):</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   设置预测还是训练</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span>               <span class="o">=</span> <span class="n">mode</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   建议框非极大抑制的iou大小</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nms_iou</span>            <span class="o">=</span> <span class="n">nms_iou</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   训练用到的建议框数量</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_train_pre_nms</span>    <span class="o">=</span> <span class="n">n_train_pre_nms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_train_post_nms</span>   <span class="o">=</span> <span class="n">n_train_post_nms</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   预测用到的建议框数量</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_test_pre_nms</span>     <span class="o">=</span> <span class="n">n_test_pre_nms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_test_post_nms</span>    <span class="o">=</span> <span class="n">n_test_post_nms</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_size</span>           <span class="o">=</span> <span class="n">min_size</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loc</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="n">anchor</span><span class="p">,</span> <span class="n">img_size</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;training&quot;</span><span class="p">:</span>
+            <span class="n">n_pre_nms</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_train_pre_nms</span>
+            <span class="n">n_post_nms</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_train_post_nms</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_pre_nms</span>   <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_test_pre_nms</span>
+            <span class="n">n_post_nms</span>  <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_test_post_nms</span>
+
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   将先验框转换成tensor</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="n">anchor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">anchor</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">loc</span><span class="o">.</span><span class="n">is_cuda</span><span class="p">:</span>
+            <span class="n">anchor</span> <span class="o">=</span> <span class="n">anchor</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   将RPN网络预测结果转化成建议框</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="n">roi</span> <span class="o">=</span> <span class="n">loc2bbox</span><span class="p">(</span><span class="n">anchor</span><span class="p">,</span> <span class="n">loc</span><span class="p">)</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   防止建议框超出图像边缘</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="n">roi</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">roi</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span> <span class="nb">min</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">max</span> <span class="o">=</span> <span class="n">img_size</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">roi</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">roi</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]],</span> <span class="nb">min</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">max</span> <span class="o">=</span> <span class="n">img_size</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   建议框的宽高的最小值不可以小于16</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="n">min_size</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_size</span> <span class="o">*</span> <span class="n">scale</span>
+        <span class="n">keep</span>        <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">where</span><span class="p">(((</span><span class="n">roi</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">roi</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">min_size</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">((</span><span class="n">roi</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">roi</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">min_size</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   将对应的建议框保留下来</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="n">roi</span>         <span class="o">=</span> <span class="n">roi</span><span class="p">[</span><span class="n">keep</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">score</span>       <span class="o">=</span> <span class="n">score</span><span class="p">[</span><span class="n">keep</span><span class="p">]</span>
+
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   根据得分进行排序，取出建议框</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="n">order</span>       <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="n">descending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">n_pre_nms</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">order</span>   <span class="o">=</span> <span class="n">order</span><span class="p">[:</span><span class="n">n_pre_nms</span><span class="p">]</span>
+        <span class="n">roi</span>     <span class="o">=</span> <span class="n">roi</span><span class="p">[</span><span class="n">order</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">score</span>   <span class="o">=</span> <span class="n">score</span><span class="p">[</span><span class="n">order</span><span class="p">]</span>
+
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   对建议框进行非极大抑制</span>
+        <span class="c1">#   使用官方的非极大抑制会快非常多</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="n">keep</span>    <span class="o">=</span> <span class="n">nms</span><span class="p">(</span><span class="n">roi</span><span class="p">,</span> <span class="n">score</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nms_iou</span><span class="p">)</span>
+        <span class="n">keep</span>    <span class="o">=</span> <span class="n">keep</span><span class="p">[:</span><span class="n">n_post_nms</span><span class="p">]</span>
+        <span class="n">roi</span>     <span class="o">=</span> <span class="n">roi</span><span class="p">[</span><span class="n">keep</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">roi</span>
+</code></pre></div>
+<h3 id="3_1">3.小结<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>建议框是用于初步筛选图像中哪些区域可能含有物体的一种技术。</li>
+<li>主干特征提取网络可以获得一个公用特征层，当输入图片为600x600x3时，其形状为38x38x1024。</li>
+<li>公用特征层中的38x38对应着图像中的38x38个区域，其中每个点相当于该区域内所有特征的汇总。</li>
+<li>建议框对这38x38个区域进行截取，即认为这些区域可能包含目标，并将截取的结果进行resize，调整为14x14x1024的大小。</li>
+<li>对每个建议框再次进行ResNet原有的第五次压缩。压缩完成后进行平均池化和展平操作，最后分别进行一个num_classes的全连接层和(num_classes)x4的全连接层。</li>
+<li>num_classes的全连接层用于对最后获得的框进行分类，而(num_classes)x4的全连接层用于对相应的建议框进行调整。</li>
+<li>通过这些操作，可以获得所有建议框的调整情况以及这些建议框内物体的类别。</li>
+<li>实际上，上一步得到的建议框就是ROI（感兴趣区域）的先验框。</li>
+</ul>
+<h2 id="roipooling">四、RoiPooling<a class="headerlink" href="#roipooling" title="Permanent link">&para;</a></h2>
+<p>​   对Proposal建议框加以利用的过程与shape变化如图所示,建议框调整后的结果就是最终的预测结果了，可以在图上进行绘画了。</p>
+<p><img alt="image-20231107085501518" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231107085501518.png" /></p>
+<h3 id="roipooling_1">RoiPooling层工作<a class="headerlink" href="#roipooling_1" title="Permanent link">&para;</a></h3>
+<p>​   将proposal feature map进行分区域，然后对每一个区域各自进行最大池化得到<span class="arithmatex">\(2 \times 2\)</span>的特征图2。在faster-rcnn中是将proposal feature map分割成<span class="arithmatex">\(14 \times 14\)</span>  的区域</p>
+<p><img alt="image-20231107090240667" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231107090240667.png" /></p>
+<ul>
+<li>
+<p>图片测试信息打印</p>
+</li>
+<li>
+<p>源码<code>classifier.py</code></p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Resnet50RoIHead</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_class</span><span class="p">,</span> <span class="n">roi_size</span><span class="p">,</span> <span class="n">spatial_scale</span><span class="p">,</span> <span class="n">classifier</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Resnet50RoIHead</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span> <span class="o">=</span> <span class="n">classifier</span>
+        <span class="c1">#--------------------------------------#</span>
+        <span class="c1">#   对ROIPooling后的的结果进行回归预测</span>
+        <span class="c1">#--------------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cls_loc</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2048</span><span class="p">,</span> <span class="n">n_class</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   对ROIPooling后的的结果进行分类</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">score</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">2048</span><span class="p">,</span> <span class="n">n_class</span><span class="p">)</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   权值初始化</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="n">normal_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cls_loc</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">)</span>
+        <span class="n">normal_init</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">roi</span> <span class="o">=</span> <span class="n">RoIPool</span><span class="p">((</span><span class="n">roi_size</span><span class="p">,</span> <span class="n">roi_size</span><span class="p">),</span> <span class="n">spatial_scale</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">rois</span><span class="p">,</span> <span class="n">roi_indices</span><span class="p">,</span> <span class="n">img_size</span><span class="p">):</span>
+        <span class="n">n</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">is_cuda</span><span class="p">:</span>
+            <span class="n">roi_indices</span> <span class="o">=</span> <span class="n">roi_indices</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+            <span class="n">rois</span> <span class="o">=</span> <span class="n">rois</span><span class="o">.</span><span class="n">cuda</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Base_layers:&#39;</span><span class="p">,</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;roi_indices:&#39;</span><span class="p">,</span><span class="n">roi_indices</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;rois:&#39;</span><span class="p">,</span><span class="n">rois</span><span class="o">.</span><span class="n">size</span><span class="p">())</span>
+        <span class="n">rois</span>        <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">rois</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">roi_indices</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">roi_indices</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">rois_feature_map</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">rois</span><span class="p">)</span>
+        <span class="n">rois_feature_map</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">rois</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]]</span> <span class="o">/</span> <span class="n">img_size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">rois_feature_map</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span> <span class="o">=</span> <span class="n">rois</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span> <span class="o">/</span> <span class="n">img_size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="n">indices_and_rois</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">roi_indices</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">rois_feature_map</span><span class="p">],</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   利用建议框对公用特征层进行截取</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="n">pool</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">roi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">indices_and_rois</span><span class="p">)</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="c1">#   利用classifier网络进行特征提取</span>
+        <span class="c1">#-----------------------------------#</span>
+        <span class="n">fc7</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifier</span><span class="p">(</span><span class="n">pool</span><span class="p">)</span>
+        <span class="c1">#--------------------------------------------------------------#</span>
+        <span class="c1">#   当输入为一张图片的时候，这里获得的f7的shape为[300, 2048]</span>
+        <span class="c1">#--------------------------------------------------------------#</span>
+        <span class="n">fc7</span> <span class="o">=</span> <span class="n">fc7</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">fc7</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">roi_cls_locs</span>    <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cls_loc</span><span class="p">(</span><span class="n">fc7</span><span class="p">)</span>
+        <span class="n">roi_scores</span>      <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">fc7</span><span class="p">)</span>
+        <span class="n">roi_cls_locs</span>    <span class="o">=</span> <span class="n">roi_cls_locs</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">roi_cls_locs</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">roi_scores</span>      <span class="o">=</span> <span class="n">roi_scores</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">roi_scores</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">roi_cls_locs</span><span class="p">,</span> <span class="n">roi_scores</span>
+</code></pre></div>
+<p><img alt="image-20231107112646883" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231107112646883.png" /></p>
+<p><img alt="image-20231107112709717" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231107112709717.png" /></p>
+<h2 id="_1">五、在原图上进行绘制<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>​   在第四步的结尾，我们对建议框进行再一次进行解码后，我们可以获得预测框在原图上的位置，而且这些预测框都是经过筛选的。这些筛选后的框可以直接绘制在图片上，就可以获得结果了。</p>
+<h2 id="_2">六、整体流程<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>以下是包括主干网络在内的更完整的Faster R-CNN流程示图：</p>
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="err">输入图片</span>
+<span class="w">      </span><span class="o">↓</span>
+<span class="w">   </span><span class="err">主干特征提取网络（如</span><span class="nv">ResNet</span><span class="err">）</span>
+<span class="w">      </span><span class="o">↓</span>
+<span class="w">   </span><span class="err">候选框提取（</span><span class="nv">RPN</span><span class="err">）</span>
+<span class="w">      </span><span class="o">↓</span>
+<span class="w">   </span><span class="err">共享特征提取</span>
+<span class="w">      </span><span class="o">↓</span>
+<span class="w">   </span><span class="nv">RoI</span><span class="w"> </span><span class="nv">Pooling</span>
+<span class="w">      </span><span class="o">↓</span>
+<span class="w">   </span><span class="err">样本标签分配和采样</span>
+<span class="w">      </span><span class="o">↓</span>
+<span class="w">   </span><span class="err">特征提取和分类</span>
+<span class="w">      </span><span class="o">↓</span>
+<span class="w">   </span><span class="err">边界框回归</span>
+<span class="w">      </span><span class="o">↓</span>
+<span class="w">   </span><span class="err">最终检测框</span>
+</code></pre></div>
+<ul>
+<li>
+<p>输入图片：将需要进行目标检测的图片作为输入。</p>
+</li>
+<li>
+<p>主干特征提取网络：使用主干特征提取网络（如ResNet）对输入图片进行特征提取，得到一个共享的特征图。</p>
+</li>
+<li>
+<p>候选框提取（RPN）：使用Region Proposal Network（RPN）从共享的特征图中提取候选框（Proposal），这些候选框是可能含有物体的区域。</p>
+</li>
+<li>
+<p>共享特征提取：将主干特征提取网络提取的共享特征图用于后续步骤，如RoI Pooling和分类回归。</p>
+</li>
+<li>
+<p>RoI Pooling：将RPN提取的候选框区域映射到共享特征图上，然后使用RoI Pooling操作将区域映射为固定大小的特征图。</p>
+</li>
+<li>
+<p>样本标签分配和采样：对RoI Pooling后的特征进行样本标签分配和采样，确定正负样本。</p>
+</li>
+<li>
+<p>特征提取和分类：使用卷积神经网络对RoI Pooling后的特征进行特征提取，并使用全连接层对提取的特征进行目标分类。</p>
+</li>
+<li>
+<p>边界框回归：使用另一个全连接层对RoI Pooling后的特征进行边界框回归，精确定位目标的位置。</p>
+</li>
+<li>
+<p>最终检测框：根据分类和回归的结果，得到最终的检测框，并进行非极大值抑制（NMS）处理，消除重叠的检测框。</p>
+</li>
+</ul>
+<p>Faster R-CNN通过主干特征提取网络、候选框提取、共享特征提取、RoI Pooling和后续的分类与回归操作，实现了对输入图片中目标的准确检测与定位。</p>
+<p><img alt="image-20231107113710654" src="../faster-rcnn-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.assets/image-20231107113710654.png" /></p>
+                
+              
+              
+<script src="https://giscus.app/client.js"
+        data-repo="yanghualv7/yanghualv7.github.io"
+        data-repo-id="R_kgDOKNOemg"
+        data-category="Announcements"
+        data-category-id="DIC_kwDOKNOems4CaxPL"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+        
+
+<script>
+    var palette = __get("__palette")
+    if (palette && typeof palette.color === "object") {
+        if (palette.color.scheme === "slate") {
+            const giscus = document.querySelector("script[src*=giscus]")
+            giscus.setAttribute("data-theme", "dark_protanopia")
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const ref = document.querySelector("[data-md-component=palette]")
+        ref.addEventListener("change", function () {
+            var palette = __get("__palette")
+            if (palette && typeof palette.color === "object") {
+                const theme = palette.color.scheme === "slate" ? "dark_protanopia" : "light_protanopia"
+                const frame = document.querySelector(".giscus-frame")
+                frame.contentWindow.postMessage({
+                    giscus: { setConfig: { theme } }
+                }, "https://giscus.app")
+            }
+        })
+    })
+</script>
+
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../../../git/git-%E7%BB%88%E7%AB%AF%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81/" class="md-footer__link md-footer__link--prev" aria-label="上一页: git终端乱码" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              git终端乱码
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../computer-system-basic/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E7%AC%94%E8%AE%B0/" class="md-footer__link md-footer__link--next" aria-label="下一页: 计算机系统基础笔记" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              计算机系统基础笔记
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2023 - NULL yanghualv7
+          </div>
+        
+        
+          Made with
+          <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+            Material for MkDocs
+          </a>
+        
+        
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+      <a href="https://github.com/yanghualv7" target="_blank" rel="noopener" title="GitHub" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+      <a href="mailto:yang2652841696@gmail.com" target="_blank" rel="noopener" title="Google" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M476 3.2 12.5 270.6c-18.1 10.4-15.8 35.6 2.2 43.2L121 358.4l287.3-253.2c5.5-4.9 13.3 2.6 8.6 8.3L176 407v80.5c0 23.6 28.5 32.9 42.5 15.8L282 426l124.6 52.2c14.2 6 30.4-2.9 33-18.2l72-432C515 7.8 493.3-6.8 476 3.2z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../../..", "features": ["navigation.footer", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.fcfe8b6d.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.b1047164.min.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+      
+        <script src="../../../../extra.js"></script>
+      
+    
+  </body>
+</html>

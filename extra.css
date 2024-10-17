@@ -1,0 +1,12 @@
+.math {
+    font-size: 110%;
+}
+body {
+  margin-left: auto;
+  margin-right: auto;
+  /* max-width: 3000px; 根据需要调整页面宽度 */
+}
+.md-main {
+  padding-left: 10px;
+  padding-right: 10px;
+}
